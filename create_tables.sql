@@ -103,3 +103,4 @@ CREATE TABLE IF NOT EXISTS "lineitem"(
   "l_shipmode"          INT,
   "l_comment"           INT,
   "l_dummy"             INT);
+    --PRIMARY KEYS "l_orderkey", "l_linenumber",
