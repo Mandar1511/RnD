@@ -1,4 +1,4 @@
-# Take as input from user
+# input from user
 tables = [
     "customer",
     "lineitem",

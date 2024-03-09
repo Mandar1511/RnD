@@ -1,4 +1,4 @@
-from db_connection import db_connection
+from db_connector import db_connection
 from table_list import tables, num_of_cols_per_table, primary_keys, primary_key_columns
 
 connection = db_connection("tpch", "localhost", "postgres", "1234", 5432)
@@ -20,12 +20,6 @@ for i in range(0, k):
                 if j != l:
                     adj.append(row[l])
             arr_of_maps[i][row[j]].add(tuple(adj))
-sunay = 4
-for key, val in arr_of_maps[3].items():
-    # print(key, val)
-    sunay -= 1
-    if sunay == 3:
-        break
 
 for i in range(len(tables)):
     primary_key = ",".join(primary_keys[i])
