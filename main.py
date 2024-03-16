@@ -2,6 +2,7 @@ from load_data import load_data
 from initialize_deltaK import initialize_deltaK
 from create_delta1tok import create_delta_tables
 from connection import connection, cursor
+from algorithm import algorithm
 
 query = """
     select * from customer, lineitem, nation, orders where 
@@ -19,3 +20,6 @@ if user_input == "y" or user_input == "Y":
 user_input = input("Do you want to populate Δk ? y/n\n")
 if user_input == "y" or user_input == "Y":
     initialize_deltaK(connection, cursor, query)
+
+while True:
+    algorithm(connection, cursor)
