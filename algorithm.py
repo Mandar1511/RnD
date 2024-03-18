@@ -56,8 +56,13 @@ def algorithm(connection, cursor):
                 hash_str = table
                 hash_str = hash_str + "#" + "#".join(row_to_str) + "#"
                 hash_block.append(hash_str)
-
-            # Store delta before travelling in Block
+            satistfied = 0
+            for x in range(len(hash_block)):
+                if x in arr_of_maps[0]:
+                    satistfied += 1
+            if satistfied == len(hash_block):
+                print("True")
+                sys.exit(0)
             connections_list = []
             block_is_useLess = False
             for l in range(len(hash_block)):
