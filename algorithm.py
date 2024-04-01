@@ -46,7 +46,9 @@ def algorithm(connection, cursor):
         for j in range(len(res)):
             # Now you are in one block
             primary_key_vals = ",".join(res[j])
-            query = f"SELECT * from {table} where ({primary_key_vals}) = {primary_key}"
+            query = (
+                f"SELECT * from {table} where ({primary_key}) = ({primary_key_vals})"
+            )
             cursor.execute(query)
             block = cursor.fetchall()  # one block B
             # print(block)
@@ -57,8 +59,10 @@ def algorithm(connection, cursor):
                 hash_str = hash_str + "#" + "#".join(row_to_str) + "#"
                 hash_block.append(hash_str)
             satistfied = 0
+            print(hash_block)
+            print(arr_of_maps[0])
             for x in range(len(hash_block)):
-                if x in arr_of_maps[0]:
+                if hash_block[x] in arr_of_maps[0]:
                     satistfied += 1
             if satistfied == len(hash_block):
                 print("True")
@@ -85,19 +89,19 @@ def recurse(ind, st, n, connections_list, k, cursor):
         union = set()
         for tup in st:
             for ele in tup:
-                union.insert(ele)
+                union.add(ele)
         union = sorted(union)
         str_to_insert = list(union)
         str_to_insert = ",".join(str_to_insert)
-        if len(union) <= k:
-            query = f"INSERT INTO delta_{k} VALUES {str_to_insert}"
+        if len(union) <= k and len(union) > 0:
+            query = f"INSERT INTO delta_{len(union)} VALUES {str_to_insert}"
             try:
                 cursor.execute(query)
             except:
                 pass
         return
-    current_set = connections_list[ind]
+    current_set = list(connections_list[ind])
     for j in range(len(current_set)):
-        st.insert(current_set[j])
+        st.add(current_set[j])
         recurse(ind + 1, st, n, connections_list, k, cursor)
         st.discard(current_set[j])

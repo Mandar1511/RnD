@@ -4,11 +4,13 @@ from create_delta1tok import create_delta_tables
 from connection import connection, cursor
 from algorithm import algorithm
 
-query = """
-    select * from customer, lineitem, nation, orders where 
-    customer.c_custkey = orders.o_custkey and lineitem.l_orderkey = orders.o_orderkey 
-    and lineitem.l_returnflag = 590239 and customer.c_nationkey = nation.n_nationkey"""
+# Make sure that order of tables in "from" is lexicographical.
+# query = """
+#     select * from customer, lineitem, nation, orders where
+#     customer.c_custkey = orders.o_custkey and lineitem.l_orderkey = orders.o_orderkey
+#     and lineitem.l_returnflag = 590239 and customer.c_nationkey = nation.n_nationkey"""
 
+query = "select * from course where cno < 500"
 user_input = input("Do you want to load the data? y/n\n")
 if user_input == "y" or user_input == "Y":
     load_data(connection, cursor)

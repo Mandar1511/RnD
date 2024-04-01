@@ -3,11 +3,6 @@ from table_list import tables, num_of_cols_per_table
 
 def initialize_deltaK(connection, cursor, query):
     k = len(tables)
-    # Make sure that order of tables in "from" is lexicographical.
-    query = """
-        select * from customer, lineitem, nation, orders where 
-        customer.c_custkey = orders.o_custkey and lineitem.l_orderkey = orders.o_orderkey 
-        and lineitem.l_returnflag = 590239 and customer.c_nationkey = nation.n_nationkey"""
     try:
         cursor.execute(query)
         res = cursor.fetchall()
