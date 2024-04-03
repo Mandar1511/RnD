@@ -16,6 +16,6 @@ def create_delta_tables(connection, cursor):
             create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns}, PRIMARY KEY({columns_without_text}))"
             cursor.execute(create_table_query)
             connection.commit()
-            print(f"Table '{table_name}' created successfully.")
+            # print(f"Table '{table_name}' created successfully.")
     except KeyError as e:
         print("Error creating tables:", e)

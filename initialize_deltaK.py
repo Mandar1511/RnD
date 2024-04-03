@@ -32,3 +32,10 @@ def initialize_deltaK(connection, cursor, query):
     except:
         print(f"Failed to fetch execute {query}")
         return
+
+
+def drop_deltas(connection, cursor):
+    k = len(tables)
+    for i in range(1, k + 1):
+        cursor.execute(f"DROP TABLE IF EXISTS delta_{i}")
+        connection.commit()

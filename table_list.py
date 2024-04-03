@@ -19,4 +19,5 @@
 tables = ["department", "employee"]
 num_of_cols_per_table = [2, 4]
 primary_keys = [["dept_id"], ["id"]]
-primary_key_columns = [[0]]
+primary_key_columns = [[0], [0]]
+select_cols = ["id", "name", "yob"]
