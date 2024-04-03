@@ -10,7 +10,7 @@ from algorithm import algorithm
 #     customer.c_custkey = orders.o_custkey and lineitem.l_orderkey = orders.o_orderkey
 #     and lineitem.l_returnflag = 590239 and customer.c_nationkey = nation.n_nationkey"""
 
-query = "select * from course where cno < 500"
+query = "SELECT * from department,employee where yob=selection_year and employee.dept_id = department.dept_id"
 user_input = input("Do you want to load the data? y/n\n")
 if user_input == "y" or user_input == "Y":
     load_data(connection, cursor)

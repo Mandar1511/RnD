@@ -16,7 +16,7 @@
 
 # primary_key_columns = [[0], [0, 3], [0], [0]]
 
-tables = ["course"]
-num_of_cols_per_table = [3]
-primary_keys = [["cno"]]
+tables = ["department", "employee"]
+num_of_cols_per_table = [2, 4]
+primary_keys = [["dept_id"], ["id"]]
 primary_key_columns = [[0]]

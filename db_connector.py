@@ -8,7 +8,7 @@ def db_connector():
         #     dbname="tpch", user="postgres", password="1234", host="localhost", port=5432
         # )
         connection = psycopg2.connect(
-            dbname="collegedb",
+            dbname="test",
             user="postgres",
             password="1234",
             host="localhost",

@@ -31,8 +31,12 @@ def initialize_k_hashmaps(k, cursor):
             sys.exit(f"Failed to fetch data from delta_{i+1}")
 
 
+is_T_inserted = False
+
+
 def algorithm(connection, cursor):
     k = len(tables)
+    is_T_inserted = False
     arr_of_maps = initialize_k_hashmaps(k, cursor)
     for i in range(len(tables)):
         primary_key = ",".join(primary_keys[i])
@@ -41,8 +45,9 @@ def algorithm(connection, cursor):
         cursor.execute(query)
         res = cursor.fetchall()  # this will store all primary keys in sorted order
         res = [
-            tuple(str(value) for value in item) for item in res
+            tuple("'" + str(value) + "'" for value in item) for item in res
         ]  # Convert integers to strings for all rows
+        print(res)
         for j in range(len(res)):
             # Now you are in one block
             primary_key_vals = ",".join(res[j])
@@ -66,6 +71,7 @@ def algorithm(connection, cursor):
                     satistfied += 1
             if satistfied == len(hash_block):
                 print("True")
+                return True
                 sys.exit(0)
             connections_list = []
             block_is_useLess = False
@@ -83,6 +89,10 @@ def algorithm(connection, cursor):
             st = set()
             recurse(0, st, len(connections_list), connections_list, k, cursor)
 
+    if not is_T_inserted:
+        print("False")
+        return False
+
 
 def recurse(ind, st, n, connections_list, k, cursor):
     if ind == n:
@@ -97,6 +107,7 @@ def recurse(ind, st, n, connections_list, k, cursor):
             query = f"INSERT INTO delta_{len(union)} VALUES {str_to_insert}"
             try:
                 cursor.execute(query)
+                is_T_inserted = True
             except:
                 pass
         return
