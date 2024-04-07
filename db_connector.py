@@ -4,11 +4,8 @@ import sys
 
 def db_connector():
     try:
-        # connection = psycopg2.connect(
-        #     dbname="tpch", user="postgres", password="1234", host="localhost", port=5432
-        # )
         connection = psycopg2.connect(
-            dbname="test",
+            dbname="tpch",
             user="postgres",
             password="1234",
             host="localhost",

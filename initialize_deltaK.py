@@ -4,6 +4,7 @@ from table_list import tables, num_of_cols_per_table
 def initialize_deltaK(connection, cursor, query):
     k = len(tables)
     try:
+        # print(query)
         cursor.execute(query)
         res = cursor.fetchall()
         for ind in range(len(res)):
@@ -24,13 +25,17 @@ def initialize_deltaK(connection, cursor, query):
                 populate_delta_query = (
                     f"INSERT INTO delta_{k} VALUES ({delta_row_values})"
                 )
+                # print(populate_delta_query)
                 cursor.execute(populate_delta_query)
                 connection.commit()
-            except:
-                print(f"Failed to insert {delta_row_values}")
-                return
+            except Exception as e:
+                # print(e)
+                # print(f"Failed to insert {delta_row_values}")
+                # return
+                connection.rollback()
     except:
-        print(f"Failed to fetch execute {query}")
+        # print("dd")
+        # print(f"Failed to fetch {query}")
         return
 
 

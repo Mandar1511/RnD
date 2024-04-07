@@ -8,14 +8,13 @@ def initialize_k_hashmaps(k, cursor):
     each hashmap is of following format:
     hashed_row : set_of_tuples
     """
+    print("called")
     arr_of_maps = [dict() for x in range(k)]
     for i in range(0, k):
         query = f"select * from delta_{i+1}"
         try:
             cursor.execute(query)
             res = cursor.fetchall()
-            print("ji")
-            print(res)
             for row in res:
                 n = len(row)
                 for j in range(n):
@@ -30,6 +29,7 @@ def initialize_k_hashmaps(k, cursor):
                     arr_of_maps[i][row[j]].add(tuple(adj))
         except:
             sys.exit(f"Failed to fetch data from delta_{i+1}")
+    print("done")
     return arr_of_maps
 
 
@@ -50,8 +50,9 @@ def algorithm(connection, cursor):
         res = [
             tuple("'" + str(value) + "'" for value in item) for item in res
         ]  # Convert integers to strings for all rows
-        # print(res)
+        print("res")
         for j in range(len(res)):
+            print(j)
             # Now you are in one block
             primary_key_vals = ",".join(res[j])
             query = (
@@ -59,7 +60,6 @@ def algorithm(connection, cursor):
             )
             cursor.execute(query)
             block = cursor.fetchall()  # one block B
-            # print(block)
             hash_block = []
             for row in block:
                 row_to_str = tuple(str(val) for val in row)
@@ -94,10 +94,11 @@ def algorithm(connection, cursor):
             if block_is_useLess:
                 continue
             st = set()
-            # print("recurse")
+            print("recurse")
             recurse(
                 0, st, len(connections_list), connections_list, k, cursor, connection
             )
+            print("recurse-done")
 
     if not is_T_inserted:
         print("False")
@@ -118,17 +119,15 @@ def recurse(ind, st, n, connections_list, k, cursor, connection):
         str_to_insert = list(union)
         str_to_insert = ",".join(str_to_insert)
         if len(union) <= k and len(union) > 0:
-            # print(len(union), str_to_insert)
             query = f"INSERT INTO delta_{len(union)} VALUES ('{str_to_insert}')"
             try:
                 global is_T_inserted
                 cursor.execute(query)
                 connection.commit()
+                print("hi")
                 is_T_inserted = True
             except Exception as e:
-                print(e)
                 connection.rollback()
-                pass
         return
     current_set = list(connections_list[ind])
     for j in range(len(current_set)):
