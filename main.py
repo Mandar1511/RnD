@@ -17,7 +17,7 @@ for row in possible_list:
     create_delta_tables(connection, cursor)
     curr_query = query
     row = ",".join(row)
-    if query2.find("WHERE") == -1:
+    if query.find("WHERE") == -1:
         curr_query += f" WHERE ({', '.join(select_cols)}) = ({row})"
     else:
         curr_query += f" AND ({', '.join(select_cols)}) = ({row})"
