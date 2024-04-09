@@ -8,7 +8,7 @@ def initialize_k_hashmaps(k, cursor):
     each hashmap is of following format:
     hashed_row : set_of_tuples
     """
-    print("called")
+    # print("called")
     arr_of_maps = [dict() for x in range(k)]
     for i in range(0, k):
         query = f"select * from delta_{i+1}"
@@ -29,7 +29,7 @@ def initialize_k_hashmaps(k, cursor):
                     arr_of_maps[i][row[j]].add(tuple(adj))
         except:
             sys.exit(f"Failed to fetch data from delta_{i+1}")
-    print("done")
+    # print("done")
     return arr_of_maps
 
 
@@ -50,9 +50,9 @@ def algorithm(connection, cursor):
         res = [
             tuple("'" + str(value) + "'" for value in item) for item in res
         ]  # Convert integers to strings for all rows
-        print("res")
+        # print("res")
         for j in range(len(res)):
-            print(j)
+            # print(j)
             # Now you are in one block
             primary_key_vals = ",".join(res[j])
             query = (
@@ -75,7 +75,7 @@ def algorithm(connection, cursor):
             # print(satistfied, hash_block)
             # print(arr_of_maps)
             if satistfied == len(hash_block):
-                print("True")
+                # print("True")
                 return True
 
             connections_list = []
@@ -94,14 +94,14 @@ def algorithm(connection, cursor):
             if block_is_useLess:
                 continue
             st = set()
-            print("recurse")
+            # print("recurse")
             recurse(
                 0, st, len(connections_list), connections_list, k, cursor, connection
             )
-            print("recurse-done")
+            # print("recurse-done")
 
     if not is_T_inserted:
-        print("False")
+        # print("False")
         return False
     else:
         return algorithm(connection, cursor)
@@ -124,7 +124,7 @@ def recurse(ind, st, n, connections_list, k, cursor, connection):
                 global is_T_inserted
                 cursor.execute(query)
                 connection.commit()
-                print("hi")
+                # print("hi")
                 is_T_inserted = True
             except Exception as e:
                 connection.rollback()
