@@ -1,4 +1,3 @@
-from load_data import load_data
 from initialize_deltaK import initialize_deltaK, drop_deltas
 from create_delta1tok import create_delta_tables
 from connection import connection, cursor
